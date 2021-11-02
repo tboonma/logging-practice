@@ -9,21 +9,44 @@ For details, see: https://docs.python.org/3/library/logging.html
 """
 import logging
 
+
 def logging_test(logger):
-    """Log messages using each of the standard logging levels 
+    """Log messages using each of the standard logging levels
        plus 1 custom log level.
-    """ 
-    # TODO write a log message that uses each of these log levels.
-    #  Your log message should be an example of the sort of information 
-    #  you would log at that level:
-    #
+    """
     # debug
+    logging.debug("Context = {'data': 1234}")
+
     # info
+    logging.info("some user has logged in.")
+
     # warning
+    logging.warning("Someone attempted to login with id: markzaza")
+
     # level = logging.WARN + 5 (custom log level between WARN and ERROR)
-    # error
-    # critical or fatal
+    # create new log level named 'HUFE_WARNING'
     level = logging.WARN + 5  # custom log level
+
+    def logForLevel(self, message, *args, **kwargs):
+        if self.isEnabledFor(level):
+            self._log(level, message, args, **kwargs)
+
+    def logToRoot(message, *args, **kwargs):
+        logging.log(level, message, *args, **kwargs)
+
+    logging.addLevelName(level, "HUGE_WARNING")
+    setattr(logging, "HUGE_WARNING", level)
+    setattr(logging.getLoggerClass(), "huge_warning", logForLevel)
+    setattr(logging, "huge_warning", logToRoot)
+
+    # huge error
+    logging.huge_warning("To warn that is going to be an error.")
+
+    # error
+    logging.error("Cannot get attribute a, skipped this function.")
+
+    # critical or fatal
+    logging.critical("No module named 'helloWorld' system shutting down.")
     print("You forgot to write logging_test")
 
 
@@ -31,7 +54,7 @@ def simple_config():
     """Configure logging using basicConfig for simple configuration.
 
     You should call this before creating any logging objects.
-    You can call basicConfig only once. 
+    You can call basicConfig only once.
 
     Some named attributes you can set using basicConfig are:
 
@@ -51,33 +74,29 @@ def simple_config():
 
 def my_config():
     """Write your own logging configuration."""
-    # TODO write your own logging configuration
-    #      specify a log file, threshold level, format, and append mode
-    pass
+    FORMAT = '[%(asctime)s] - %(levelname)s: %(message)s'
+    logging.basicConfig(format=FORMAT, level=1, filename="tasks.log", filemode="w")
 
 
 if __name__ == "__main__":
-    #
-    # TODO Configure logging using one of these choices:
-
     # 1. Call basicConfig with the default settings
-    logging.basicConfig()
+    # logging.basicConfig()
 
     # 2. Call simple_config to set the format of log messages.
     #    Comment out the above call (#1) to basicConfig for this.
     # simple_config()
 
     # 3. my_config() write your own logging configuration as
-    #    described in the assignment. 
+    #    described in the assignment.
     #    Comment out the above calls to simple_config and basicConfig.
-    # my_config() 
+    my_config()
 
     # Log some messages to the root logger using different logging levels.
     logger = logging.getLogger()
+    logger.setLevel(logging.WARN)
     print("Logging to ", str(logger))
     logging_test(logger)
 
-
-    # TODO create a named logger, set a a custom log threshold,
-    #       and call logging_test again with your named logger.
-
+    mylogger = logging.getLogger()
+    mylogger.setLevel(logging.DEBUG)  # log everything
+    logging_test(mylogger)

@@ -1,0 +1,10 @@
+[2021-11-02 23:23:24,199] - WARNING: Someone attempted to login with id: markzaza
+[2021-11-02 23:23:24,199] - HUGE_WARNING: To warn that is going to be an error.
+[2021-11-02 23:23:24,199] - ERROR: Cannot get attribute a, skipped this function.
+[2021-11-02 23:23:24,199] - CRITICAL: No module named 'helloWorld' system shutting down.
+[2021-11-02 23:23:24,199] - DEBUG: Context = {'data': 1234}
+[2021-11-02 23:23:24,199] - INFO: some user has logged in.
+[2021-11-02 23:23:24,199] - WARNING: Someone attempted to login with id: markzaza
+[2021-11-02 23:23:24,199] - HUGE_WARNING: To warn that is going to be an error.
+[2021-11-02 23:23:24,199] - ERROR: Cannot get attribute a, skipped this function.
+[2021-11-02 23:23:24,199] - CRITICAL: No module named 'helloWorld' system shutting down.
